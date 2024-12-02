@@ -1,0 +1,70 @@
+# Kompilatorgenererade filer
+*.o
+*.obj
+*.so
+*.dll
+*.dylib
+*.exe
+*.out
+*.class
+
+# CMake-filer
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# Byggmappar
+/build/
+*/build/
+
+# IDE-specifika filer
+.vscode/
+.idea/
+*.code-workspace
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.user
+*.ncb
+*.suo
+*.pdb
+*.opendb
+*.tlog
+*.idb
+
+# Loggfiler
+*.log
+
+# Binär- och mellanlagringsfiler
+bin/
+obj/
+
+# Bibliotek och tredjepartsfiler
+*.lib
+*.a
+*.pyc
+*.pyo
+*.swp
+
+# Operativsystem-specifika filer
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Test- och täckningsrapporter
+*.gcno
+*.gcda
+*.gcov
+lcov-report/
+test-results/
+
+# Temporära filer
+*.tmp
+*.temp
+*.bak
+*.old
+
+# Cache- och metadatafiler
+*.cache
+*.lock
