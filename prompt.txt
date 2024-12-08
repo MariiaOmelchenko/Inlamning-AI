@@ -1,0 +1,213 @@
+
+Prompt 1:
+
+"Skapa en kravlista för en kontaktbok med följande funktioner:
+
+Spara kontakter med multipla e-mail och telefonnummer.
+MySQL som back-end för datalagring.
+Möjlighet att söka på namn, telefonnummer eller e-postadress.
+Ett TUI (Text User Interface) som kan navigera mellan olika vyer (t.ex. lägg till kontakt, visa alla kontakter, sök kontakt)."
+
+Kravlista för en kontaktbok
+Lagring:
+
+Kontakter ska kunna innehålla:
+Namn (för- och efternamn).
+Flera telefonnummer.
+Flera e-postadresser.
+Data lagras i en MySQL-databas.
+Funktioner:
+
+Lägg till kontakt:
+Möjlighet att lägga till namn, telefonnummer och e-postadresser.
+Visa alla kontakter:
+Lista alla kontakter från databasen.
+Sök kontakt:
+Möjlighet att söka på namn, telefonnummer eller e-postadress.
+Redigera och ta bort kontakt:
+Uppdatera befintlig kontaktinformation.
+Ta bort kontakter.
+Gränssnitt:
+
+TUI (Text User Interface) som stödjer:
+Navigering mellan vyer som:
+Lägg till kontakt.
+Visa alla kontakter.
+Sök kontakt.
+Redigera och ta bort kontakter.
+Enkel och intuitiv design med hjälp av ncurses.
+Övrigt:
+
+Systemet ska vara robust och ge användarvänliga felmeddelanden.
+Projektet ska vara plattformsoberoende (stöd för Linux, Windows via WSL).
+
+Prompt 2:
+
+"Generera projektstruktur för en C++-applikation som använder MySQL och ncurses, inklusive mappar och en CMakeLists.txt för att kompilera projektet."
+
+Inlamning-AI/
+├── CMakeLists.txt       # Huvud-CMake-konfigurationsfil
+├── src/                 # Källkodsfiler
+│   ├── main.cpp         # Startpunkt för applikationen
+│   ├── DatabaseManager.h
+│   ├── DatabaseManager.cpp
+│   ├── TUI.h
+│   ├── TUI.cpp
+├── include/             # Eventuella externa bibliotek (valfritt)
+├── sql/                 # SQL-skript
+│   ├── schema.sql       # Databasens schema
+├── scripts/             # Bash-script för installation och körning
+│   ├── install.sh       # Script för installation av beroenden
+├── build/               # Byggkatalog (skapad av CMake)
+├── README.md            # Projektbeskrivning
+├── .gitignore           # Ignorera byggfiler och tillfälliga filer
+
+
+Prompt 3:
+
+"Skapa ett SQL-schema för en kontaktbok med en tabell för kontakter som har namn, telefonnummer och e-post. Stödjer flera telefonnummer och e-postadresser per kontakt."
+
+CREATE DATABASE kontaktbok;
+
+USE kontaktbok;
+
+CREATE TABLE contacts (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE emails (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    contact_id INT NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    FOREIGN KEY (contact_id) REFERENCES contacts(id) ON DELETE CASCADE
+);
+
+CREATE TABLE phone_numbers (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    contact_id INT NOT NULL,
+    phone_number VARCHAR(20) NOT NULL,
+    FOREIGN KEY (contact_id) REFERENCES contacts(id) ON DELETE CASCADE
+);
+
+Prompt 4:
+
+"Generera en klass Database i C++ för att hantera anslutning till MySQL och CRUD-operationer för kontakter."
+
+Klass Database i C++
+
+#ifndef DATABASEMANAGER_H
+#define DATABASEMANAGER_H
+
+#include <mysql/mysql.h>
+#include <string>
+#include <vector>
+
+struct Contact {
+    int id;
+    std::string name;
+    std::vector<std::string> emails;
+    std::vector<std::string> phone_numbers;
+};
+
+class DatabaseManager {
+public:
+    DatabaseManager(const std::string &host, const std::string &user, const std::string &password, const std::string &dbname);
+    ~DatabaseManager();
+
+    bool addContact(const Contact &contact);
+    std::vector<Contact> getAllContacts();
+    std::vector<Contact> searchContacts(const std::string &query);
+    bool deleteContact(int id);
+
+private:
+    MYSQL *connection;
+    bool executeQuery(const std::string &query);
+};
+
+#endif // DATABASEMANAGER_H
+
+Prompt 5:
+
+"Skapa ett enkelt TUI med ncurses i C++ som tillåter användaren att navigera i menyer för att lägga till kontakter, visa kontakter och söka."
+
+Enkel TUI med ncurses
+
+#include <ncurses.h>
+#include <string>
+#include <vector>
+
+// Funktioner
+void showMenu();
+void addContact();
+void listContacts();
+void searchContact();
+
+int main() {
+    initscr();            // Initiera ncurses
+    noecho();             // Dölj tangentbord
+    cbreak();             // Direkt input utan Enter
+
+    showMenu();
+
+    endwin();             // Avsluta ncurses
+    return 0;
+}
+
+void showMenu() {
+    int choice;
+    do {
+        clear();
+        mvprintw(0, 0, "Kontaktbok");
+        mvprintw(2, 0, "1. Lägg till kontakt");
+        mvprintw(3, 0, "2. Visa alla kontakter");
+        mvprintw(4, 0, "3. Sök kontakt");
+        mvprintw(5, 0, "4. Avsluta");
+        mvprintw(7, 0, "Välj: ");
+        refresh();
+
+        choice = getch() - '0';
+
+        switch (choice) {
+            case 1: addContact(); break;
+            case 2: listContacts(); break;
+            case 3: searchContact(); break;
+        }
+    } while (choice != 4);
+}
+
+void addContact() {
+    // Placeholder för funktion
+    mvprintw(10, 0, "Lägg till kontakt - ännu inte implementerad");
+    getch();
+}
+
+void listContacts() {
+    // Placeholder för funktion
+    mvprintw(10, 0, "Visa alla kontakter - ännu inte implementerad");
+    getch();
+}
+
+void searchContact() {
+    // Placeholder för funktion
+    mvprintw(10, 0, "Sök kontakt - ännu inte implementerad");
+    getch();
+}
+
+Prompt 6:
+
+"Skriv ett Bash-script för att installera nödvändiga verktyg för att köra applikationen, inklusive MySQL och CMake."
+
+Bash-script för installation
+
+#!/bin/bash
+
+# Uppdatera och installera MySQL och ncurses
+sudo apt update
+sudo apt install -y mysql-server libmysqlclient-dev libncurses5-dev libncursesw5-dev cmake g++
+
+# Skapa MySQL-databas
+mysql -u root -p kontaktbok
+CREATE DATABASE kontaktbok;
+
+echo "Installation klar. Kompilera projektet med CMake."
